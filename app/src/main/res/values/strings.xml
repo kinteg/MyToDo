@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">MyToDo</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="plus">+</string>
+    <string name="delete">✗</string>
+    <string name="error">"Нельзя оставлять это поле пустм"</string>
+    <string-array name="tasks">
+        <item>Позвонить </item>
+        <item>Проверить </item>
+        <item>Получить </item>
+        <item>Написать </item>
+        <item>Купить </item>
+        <item>Встретиться с </item>
+        <item>Очистить </item>
+        <item>Взять </item>
+        <item>Отправить </item>
+        <item>Оплат </item>
+        <item>Сделать </item>
+        <item>Забрать </item>
+        <item>Сделать </item>
+        <item>Прочитать </item>
+        <item>Печать </item>
+        <item>Закончить </item>
+        <item>Изучить </item>
+    </string-array>
+    <string-array name="days">
+        <item>Сегодня</item>
+        <item>Завтра</item>
+        <item>Предостоящие</item>
+        <item>Без даты</item>
+        <item>Прошедшие</item>
+    </string-array>
+</resources>
