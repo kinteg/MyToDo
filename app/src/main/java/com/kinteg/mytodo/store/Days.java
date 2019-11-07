@@ -1,5 +1,7 @@
 package com.kinteg.mytodo.store;
 
+import android.provider.ContactsContract;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,16 +32,22 @@ public enum Days {
     }
 
 
-    private Date today() throws ParseException {
+    public Date today()  {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        return dateFormat.parse(dateFormat.format(new Date()));
+        try {
+            return dateFormat.parse(dateFormat.format(new Date()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public Date getStartTime() throws ParseException {
+    public Date getStartTime()  {
         return new Date(today().getTime() + start);
     }
 
-    public Date getEndTime() throws ParseException {
+    public Date getEndTime()  {
         return new Date(today().getTime() + end);
     }
+
 }

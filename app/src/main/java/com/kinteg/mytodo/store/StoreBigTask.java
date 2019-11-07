@@ -1,5 +1,7 @@
 package com.kinteg.mytodo.store;
 
+import android.util.Log;
+
 import com.kinteg.mytodo.realm.BigTask;
 
 import java.text.ParseException;
@@ -7,9 +9,10 @@ import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import lombok.Getter;
 
 public class StoreBigTask {
-
+    @Getter
     private final static StoreBigTask STORE_BIG_TASK = new StoreBigTask();
     private final static String FILED_NAME = "create";
     private RealmResults<BigTask> bigTasks;
@@ -22,9 +25,6 @@ public class StoreBigTask {
         mRealm.commitTransaction();
     }
 
-    public static StoreBigTask getStore() {
-        return STORE_BIG_TASK;
-    }
 
     public void add(String name, Date create, Date closed, boolean completed) {
         mRealm.beginTransaction();
@@ -42,11 +42,11 @@ public class StoreBigTask {
     }
 
     public RealmResults<BigTask> getAll(Days days) {
-        try {
-            return findTasks(days);
-        } catch (ParseException e) {
-            return null;
-        }
+        return findTasks(days);
+    }
+
+    public RealmResults<BigTask> getAll(Date date) {
+        return findTasks(date);
     }
 
     public void remove(BigTask bigTask) {
@@ -61,19 +61,16 @@ public class StoreBigTask {
         mRealm.commitTransaction();
     }
 
-    public int getSize() {
-        return bigTasks.size();
-    }
 
     public int getSize(Days days) {
-        try {
-            return findTasks(days).size();
-        } catch (ParseException e) {
-            return 0;
-        }
+        return findTasks(days).size();
     }
 
-    private RealmResults<BigTask> findTasks(Days days) throws ParseException {
+    public int getSize(Date date) {
+        return findTasks(date).size();
+    }
+
+    private RealmResults<BigTask> findTasks(Days days)  {
         RealmResults<BigTask> bigTasks1;
         Date startTime = days.getStartTime();
         Date endTime = days.getEndTime();
@@ -94,5 +91,14 @@ public class StoreBigTask {
         mRealm.commitTransaction();
         return bigTasks1;
     }
+
+    private RealmResults<BigTask> findTasks(Date date) {
+        RealmResults<BigTask> bigTasks1;
+        mRealm.beginTransaction();
+        bigTasks1 = mRealm.where(BigTask.class).between(FILED_NAME, new Date(date.getTime() - 10000), new Date(date.getTime() + 86400000 - 10000)).findAll();
+        mRealm.commitTransaction();
+        return bigTasks1;
+    }
+
 
 }

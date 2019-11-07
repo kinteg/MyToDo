@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Мой список дел</string>
+    <string name="title_home">Главная</string>
+    <string name="title_dashboard">Календарь</string>
+    <string name="title_notifications">Настройки</string>
+    <string name="error">"Нельзя оставлять это поле пустм"</string>
+    <string name="language">Язык</string>
+    <string name="theme">Тема</string>
+    <string name="language_selection">Выбор языка</string>
+    <string name="theme_selection">Выбор темы</string>
+    <string name="add">Добавить</string>
+    <string name="resources">Вы действительно хотите выйти?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="exit">"Не забудьте сделать все свои дела!"</string>
+    <string-array name="tasks">
+        <item>Позвонить </item>
+        <item>Проверить </item>
+        <item>Получить </item>
+        <item>Написать </item>
+        <item>Купить </item>
+        <item>Встретиться с </item>
+        <item>Очистить </item>
+        <item>Взять </item>
+        <item>Отправить </item>
+        <item>Оплат </item>
+        <item>Сделать </item>
+        <item>Забрать </item>
+        <item>Сделать </item>
+        <item>Прочитать </item>
+        <item>Печать </item>
+        <item>Закончить </item>
+        <item>Изучить </item>
+        <item>Спросить </item>
+    </string-array>
+    <string-array name="days">
+        <item>Сегодня</item>
+        <item>Завтра</item>
+        <item>Предостоящие</item>
+        <item>Без даты</item>
+        <item>Прошедшие</item>
+    </string-array>
+    <string-array name="languages">
+        <item>Русский</item>
+        <item>Английский</item>
+    </string-array>
+    <string-array name="themes">
+        <item>Светлая</item>
+        <item>Тёмная</item>
+    </string-array>
+</resources>

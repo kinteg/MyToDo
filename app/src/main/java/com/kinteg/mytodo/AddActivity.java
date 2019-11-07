@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,8 +21,8 @@ import java.util.Date;
 
 public class AddActivity extends AppCompatActivity {
 
-    private EditText name;
     private final static String TYPE = "type";
+    private EditText name;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,20 +40,23 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public boolean enterName(View v, int keyCode, KeyEvent event) {
-        Days days = (Days) getIntent().getSerializableExtra(TYPE);
-        Date date = null;
-        try {
+        Date date;
+        if (getIntent().getSerializableExtra(TYPE).getClass() == Date.class) {
+            date = (Date) getIntent().getSerializableExtra(TYPE);
+        } else {
+            Days days = (Days) getIntent().getSerializableExtra(TYPE);
             date = days.equals(Days.WITHOUT_DATE) ? null : days.getStartTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
+
         if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
             if (name.length() == 0) {
                 name.setError(getResources().getString(R.string.error));
             } else {
                 name.setError(null);
-                    StoreBigTask.getStore().add(name.getText().toString(), date, null, false);
+                StoreBigTask.getSTORE_BIG_TASK().add(name.getText().toString(), date, null, false);
+
                 startActivity(new Intent(this, MainActivity.class));
+                finish();
             }
         }
         return true;

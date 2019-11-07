@@ -1,6 +1,7 @@
 package com.kinteg.mytodo.adapters;
 
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,20 @@ import com.kinteg.mytodo.realm.BigTask;
 import com.kinteg.mytodo.store.Days;
 import com.kinteg.mytodo.store.StoreBigTask;
 
-class TaskAdapter extends RecyclerView.Adapter {
+import java.util.Date;
+
+public class TaskAdapter extends RecyclerView.Adapter {
 
     private Days day;
+    private Date date;
+    private static StoreBigTask store_big_task = StoreBigTask.getSTORE_BIG_TASK();
 
-    TaskAdapter(Days day) {
+    public TaskAdapter(Days day) {
         this.day = day;
+    }
+
+    public TaskAdapter(Date date) {
+        this.date = date;
     }
 
     @NonNull
@@ -33,7 +42,14 @@ class TaskAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        BigTask bigTask = StoreBigTask.getStore().getAll(day).get(position);
+        BigTask bigTask;
+        if (day == null) {
+            bigTask = store_big_task.getAll(date).get(position);
+            Log.wtf("111", date.toString() + "qwe");
+        } else {
+            bigTask = store_big_task.getAll(day).get(position);
+        }
+
         if (bigTask == null) return;
         CheckBox checkBox = holder.itemView.findViewById(R.id.check);
         Button button = holder.itemView.findViewById(R.id.delete_task);
@@ -47,7 +63,7 @@ class TaskAdapter extends RecyclerView.Adapter {
                 button.setVisibility(View.INVISIBLE);
                 checkBox.setPaintFlags(checkBox.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
             }
-            StoreBigTask.getStore().setCheck(checkBox.isChecked(), bigTask);
+            store_big_task.setCheck(checkBox.isChecked(), bigTask);
         });
 
         checkBox.setChecked(bigTask.isCompleted());
@@ -55,14 +71,19 @@ class TaskAdapter extends RecyclerView.Adapter {
 
         button.setOnClickListener(v -> {
             notifyItemRemoved(position);
-            StoreBigTask.getStore().remove(bigTask);
+            store_big_task.remove(bigTask);
             notifyDataSetChanged();
         });
     }
 
     @Override
     public int getItemCount() {
-        return StoreBigTask.getStore().getSize(day);
+        if (day == null) {
+            Log.wtf("qqqq1", store_big_task.getSize(date) + "");
+            return store_big_task.getSize(date);
+        }
+        Log.wtf("qqqq2", store_big_task.getSize(day) + "");
+        return store_big_task.getSize(day);
     }
 
 
